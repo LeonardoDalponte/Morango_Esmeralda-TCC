@@ -13,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "produto")
 public class Produto {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_produto")
@@ -29,6 +31,9 @@ public class Produto {
 
     @Column(name = "preco", nullable = false)
     private Double preco;
+
+    @Column(name = "caminho_imagem")
+    private String imagem;
 
     @OneToMany(mappedBy = "produto")
     private List<CarrinhoProduto> carrinhoProduto;
