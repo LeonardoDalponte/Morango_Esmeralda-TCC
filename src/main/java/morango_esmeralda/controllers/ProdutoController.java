@@ -17,13 +17,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("api/produtos")
 public class ProdutoController {
-
-
     @Autowired
     private ProdutoService produtoService;
 
@@ -34,16 +33,34 @@ public class ProdutoController {
     }
 
 
-    @PostMapping("/salvar")
+    @PostMapping("")
     public ProdutoResponseDTO salvar(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
         return produtoService.salvar(produtoRequestDTO);
     }
 
-    @PostMapping("/{id}/image")
+    @PutMapping("/{id}")
+    public ProdutoResponseDTO alterar(@RequestBody ProdutoRequestDTO produtoRequestDTO, @PathVariable("id") Integer idProduto) {
+        return produtoService.alterar(produtoRequestDTO, idProduto);
+    }
+
+    @PostMapping("/{id}/imagem")
     public ResponseEntity<Void> salvarImagem(
-            @PathVariable("id")  Integer id,
+            @PathVariable("id") Integer id,
             @RequestParam("fileImage") MultipartFile imagem) throws IOException {
-        produtoService.salvarImagem(imagem,id);
+        produtoService.salvarImagem(imagem, id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/buscarprodutos")
+    public List<Produto> listarProdutos() {
+        return produtoService.buscarProdutos();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProduto(@PathVariable("id") Integer idProduto) {
+        produtoService.deletarProduto(idProduto);
+        return ResponseEntity.noContent().build();
+    }
 }
+
+

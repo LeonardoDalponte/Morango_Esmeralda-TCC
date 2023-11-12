@@ -1,7 +1,9 @@
 package morango_esmeralda.controllers;
 
 import morango_esmeralda.dtos.requests.CarrinhoRequestDTO;
+import morango_esmeralda.dtos.requests.ProdutoRequestDTO;
 import morango_esmeralda.dtos.responses.CarrinhoResponseDTO;
+import morango_esmeralda.dtos.responses.ProdutoResponseDTO;
 import morango_esmeralda.dtos.responses.UsuarioResponseDTO;
 import morango_esmeralda.domain.Carrinho;
 import morango_esmeralda.domain.Usuario;
@@ -23,5 +25,10 @@ public class CarrinhoController {
     @PostMapping("")
     public CarrinhoResponseDTO salvar(@RequestBody CarrinhoRequestDTO carrinhoRequestDTO) {
         return carrinhoService.salvar(carrinhoRequestDTO);
+    }
+
+    @PostMapping("/adcionarProduto")
+    public CarrinhoResponseDTO adcionarProduto(@RequestBody CarrinhoRequestDTO carrinhoRequestDTO) {
+        return carrinhoService.adcionarProduto(carrinhoRequestDTO);
     }
 }

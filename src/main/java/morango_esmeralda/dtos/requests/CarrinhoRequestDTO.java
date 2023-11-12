@@ -10,6 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarrinhoRequestDTO {
-    private List<Integer> idProdutos;
+
+    private Integer idProduto;
+
+    private Integer idCarrinho;
+
     private Integer idUsuario;
 }
