@@ -7,7 +7,10 @@ import morango_esmeralda.repository.ProdutoRepository;
 import morango_esmeralda.repository.UsuarioRepository;
 import morango_esmeralda.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -27,5 +30,14 @@ public class ProdutoController {
         return produtoService.salvar(produtoRequestDTO);
     }
 
+    @GetMapping(path = "/buscar-todos")
+    public List<ProdutoResponseDTO> buscarTodos() {
+        return produtoService.buscarTodos();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarProduto(@PathVariable("id") Integer idProduto) {
+        produtoService.deletar(idProduto);
+    }
 
 }

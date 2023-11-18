@@ -13,6 +13,8 @@ public class UsuarioRequestDTO {
     private String nome;
     private String senha;
     private UserRole role;
+    private String email;
     private String endereco;
+
 
 }

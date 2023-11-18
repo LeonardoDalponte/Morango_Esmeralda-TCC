@@ -22,5 +22,9 @@ public class CarrinhoController {
     public void deletarCarrinho(@PathVariable("id") Integer id) {
         carrinhoService.deletarCarrinho(id);
     }
+    @DeleteMapping("/remover-produto/{id-carrinho-produto}")
+    public void removerProdutoCarrinho(@PathVariable ("id-carrinho-produto") Integer idCarrinhoProduto ){
+        carrinhoService.removerProdutoCarrinho(idCarrinhoProduto);
+    }
 
 }

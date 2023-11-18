@@ -34,11 +34,11 @@ public class CadastroLoginService {
             throw new RuntimeException("Usuario não encontrado!");
         }
 
-        if (usuarioRequestDTO.getRole() == UserRole.ADMIN){
+        if (usuarioRequestDTO.getRole() == UserRole.ADMIN) {
             throw new RuntimeException("Usuario não pode ser do tipo ADMIN");
         }
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha());
-        Usuario usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getRole(),usuarioRequestDTO.getEndereco());
+        Usuario usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getRole(), usuarioRequestDTO.getEndereco());
 
         usuarioRepository.save(usuarioParaCadastrar);
 
@@ -51,9 +51,7 @@ public class CadastroLoginService {
     }
 
     public ResponseEntity<Object> login(UsuarioRequestDTO usuarioRequestDTOd) {
-        var nomeSenha = new UsernamePasswordAuthenticationToken(
-                usuarioRequestDTOd.getNome(),
-                usuarioRequestDTOd.getSenha());
+        var nomeSenha = new UsernamePasswordAuthenticationToken(usuarioRequestDTOd.getNome(), usuarioRequestDTOd.getSenha());
         var auth = this.authenticationManager.authenticate(nomeSenha);
 
         var token = tokenService.geradorDeToken((Usuario) auth.getPrincipal());
@@ -67,5 +65,14 @@ public class CadastroLoginService {
 
     public void deletar(Integer idUsuario) {
         usuarioRepository.deleteById(idUsuario);
+    }
+
+    public UsuarioResponseDTO alterar(UsuarioRequestDTO usuarioRequestDTO) {
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
+        usuarioResponseDTO.setNome(usuarioRequestDTO.getNome());
+        usuarioResponseDTO.setSenha(usuarioRequestDTO.getSenha());
+        usuarioResponseDTO.setRole(usuarioRequestDTO.getRole());
+        usuarioResponseDTO.setEmail(usuarioRequestDTO.getEmail());
+        return usuarioResponseDTO;
     }
 }

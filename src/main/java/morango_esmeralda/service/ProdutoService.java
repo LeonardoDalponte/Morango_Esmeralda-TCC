@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +49,24 @@ public class ProdutoService {
         produtoResponseDTO.setPreco(produto.getPreco());
 
         return produtoResponseDTO;
+    }
+
+    public List<ProdutoResponseDTO> buscarTodos() {
+        List<Produto> produtos = produtoRepository.findAll();
+        List<ProdutoResponseDTO> produtoResponseDTOSArrayList = new ArrayList<>();
+        for (Produto produto : produtos) {
+
+            ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO(
+                    produto.getIdProduto(), produto.getNome(), produto.getDescricao(),
+                    produto.getQuant(), produto.getPreco());
+
+            produtoResponseDTOSArrayList.add(produtoResponseDTO);
+        }
+        return produtoResponseDTOSArrayList;
+    }
+
+    public void deletar(Integer idProduto) {
+        produtoRepository.deleteById(idProduto);
     }
 }
 

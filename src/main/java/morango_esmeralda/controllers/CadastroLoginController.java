@@ -44,5 +44,8 @@ public class CadastroLoginController {
 
     }
 
-
+    @PutMapping(path = "/alterar")
+    public UsuarioResponseDTO alterar(@RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        return cadastroLoginService.alterar(usuarioRequestDTO);
+    }
 }

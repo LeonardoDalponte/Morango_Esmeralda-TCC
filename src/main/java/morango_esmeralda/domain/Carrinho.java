@@ -23,6 +23,8 @@ public class Carrinho {
     @Column(name = "CEP", length = 245, nullable = true)
     private String CEP;
 
+    @Column(name = "total", length = 245, nullable = true)
+    private Double total;
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;

@@ -18,4 +18,11 @@ public class ProdutoResponseDTO {
     private Integer quant;
 
     private Double preco;
+
+    public ProdutoResponseDTO( String nome, String descricao, Integer quant, Double preco) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.quant = quant;
+        this.preco = preco;
+    }
 }

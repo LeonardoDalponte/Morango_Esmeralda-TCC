@@ -32,10 +32,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "api/produtos").permitAll()
                         .requestMatchers(HttpMethod.PUT, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/produtos/{id}/imagem").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/produtos/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/produtos/buscar-todos").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/produtos/buscarprodutos").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/alterar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/carrinhos/adcionarProduto").permitAll()
                         .anyRequest().authenticated()
 
