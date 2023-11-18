@@ -25,21 +25,20 @@ public class Usuario implements UserDetails {
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
-
     @Column(name = "nome", length = 40, nullable = false)
     private String nome;
 
     @Column(name = "senha", length = 245, nullable = false)
     private String senha;
 
-
-    @Column(name = "email", length = 40, nullable = true)
+    @Column(name = "email", length = 40, nullable = false)
     private String email;
+
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public Usuario(String nome, String senha, UserRole role) {
+    public Usuario(String nome, String senha, UserRole role,String endereco) {
         this.nome = nome;
         this.senha = senha;
         this.role = role;

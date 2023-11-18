@@ -2,6 +2,7 @@ package morango_esmeralda.service;
 
 import lombok.RequiredArgsConstructor;
 import morango_esmeralda.Infra.security.TokenService;
+import morango_esmeralda.domain.user.UserRole;
 import morango_esmeralda.dtos.requests.UsuarioRequestDTO;
 import morango_esmeralda.dtos.responses.LoginResponseDTO;
 import morango_esmeralda.dtos.responses.UsuarioResponseDTO;
@@ -33,8 +34,11 @@ public class CadastroLoginService {
             throw new RuntimeException("Usuario não encontrado!");
         }
 
+        if (usuarioRequestDTO.getRole() == UserRole.ADMIN){
+            throw new RuntimeException("Usuario não pode ser do tipo ADMIN");
+        }
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha());
-        Usuario usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getRole());
+        Usuario usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getRole(),usuarioRequestDTO.getEndereco());
 
         usuarioRepository.save(usuarioParaCadastrar);
 

@@ -25,16 +25,18 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+                .cors().and()
+                .csrf().disable()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "api/produtos").hasAuthority(UserRole.ADMIN.getRole())
+                        .requestMatchers(HttpMethod.POST, "api/produtos").permitAll()
                         .requestMatchers(HttpMethod.PUT, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/produtos/{id}/imagem").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/produtos/buscarprodutos").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/carrinhos/adcionarProduto").permitAll()
                         .anyRequest().authenticated()
 
                 )

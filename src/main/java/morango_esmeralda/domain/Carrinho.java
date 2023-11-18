@@ -3,9 +3,7 @@ package morango_esmeralda.domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,6 +16,12 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrinho")
     private Integer idCarrinho;
+
+    @Column(name = "endereco_entrega", length = 245, nullable = true)
+    private String endereco;
+
+    @Column(name = "CEP", length = 245, nullable = true)
+    private String CEP;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
