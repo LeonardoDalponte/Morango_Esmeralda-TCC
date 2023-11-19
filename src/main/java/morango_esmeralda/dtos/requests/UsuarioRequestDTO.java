@@ -5,16 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import morango_esmeralda.domain.user.UserRole;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class UsuarioRequestDTO {
-
     private String nome;
     private String senha;
-    private UserRole role;
     private String email;
-    private String endereco;
-
-
+    private Date dataNasc;
+    private String telefone;
 }

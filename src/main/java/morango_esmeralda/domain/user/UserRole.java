@@ -1,17 +1,17 @@
 package morango_esmeralda.domain.user;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMINISTRADOR("admin"),
+    CLIENTE("cliente");
 
-    private String role;
+    private String tipo;
 
-    UserRole(String role) {
-        this.role = role;
+    UserRole(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getRole() {
-        return role;
+        return tipo;
     }
 
 }

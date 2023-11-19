@@ -23,7 +23,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("morango_esmeralda-api")
-                    .withSubject(usuario.getNome())
+                    .withSubject(usuario.getEmail())
                     .withExpiresAt(LocalDateTime.now().plusHours(2).atZone(ZoneId.systemDefault()).toInstant())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

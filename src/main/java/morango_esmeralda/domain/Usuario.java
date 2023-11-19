@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -34,20 +35,36 @@ public class Usuario implements UserDetails {
     @Column(name = "email", length = 40, nullable = false)
     private String email;
 
+    @Column(name = "data_nasc", length = 40, nullable = false)
+    private Date dataNasc;
+
+    @Column(name = "telefone", length = 40, nullable = false)
+    private String telefone;
+
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @Column()
+    private UserRole tipo;
 
-    public Usuario(String nome, String senha, UserRole role,String endereco) {
+    public Usuario(String nome, String senha, String email, Date data_nasc, String telefone, UserRole tipo) {
         this.nome = nome;
         this.senha = senha;
-        this.role = role;
+        this.email = email;
+        this.dataNasc = data_nasc;
+        this.telefone = telefone;
+        this.tipo = tipo;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getRole());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(tipo.getRole());
         return Collections.singleton(authority);
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
@@ -55,10 +72,6 @@ public class Usuario implements UserDetails {
         return senha;
     }
 
-    @Override
-    public String getUsername() {
-        return nome;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -4,6 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import morango_esmeralda.domain.Usuario;
+import morango_esmeralda.excepition.UsuarioException;
 import morango_esmeralda.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +31,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         var token = this.recvoverToken(request);
         if (token != null) {
-            var nome = tokenService.validacaoToken(token);
-            UserDetails usuario = usuarioRepository.findByNome(nome);
+            var email = tokenService.validacaoToken(token);
+            Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new UsuarioException("Usuario não encontrado"));
 
             var autenticacao = new UsernamePasswordAuthenticationToken(
                     usuario, null, usuario.getAuthorities());

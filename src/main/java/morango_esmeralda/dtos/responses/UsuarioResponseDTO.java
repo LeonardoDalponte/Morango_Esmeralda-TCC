@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import morango_esmeralda.domain.user.UserRole;
 
 import javax.management.relation.Role;
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -23,5 +24,8 @@ public class UsuarioResponseDTO {
     private String email;
 
     private UserRole role;
+
+    private Date data_nasc;
+    private String telefone;
 
 }
