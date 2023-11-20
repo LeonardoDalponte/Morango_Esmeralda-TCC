@@ -2,7 +2,7 @@ package morango_esmeralda.service;
 
 import lombok.RequiredArgsConstructor;
 import morango_esmeralda.Infra.security.TokenService;
-import morango_esmeralda.domain.user.UserRole;
+import morango_esmeralda.enums.TipoUsuario;
 import morango_esmeralda.dtos.requests.LoginRequestDTO;
 import morango_esmeralda.dtos.requests.UsuarioRequestDTO;
 import morango_esmeralda.dtos.responses.LoginResponseDTO;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -41,8 +40,11 @@ public class CadastroLoginService {
 
         String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha());
         usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getEmail(),
-                usuarioRequestDTO.getDataNasc(), usuarioRequestDTO.getTelefone(), UserRole.CLIENTE);
+                usuarioRequestDTO.getDataNasc(), usuarioRequestDTO.getTelefone(), TipoUsuario.CLIENTE);
 
+        if (usuarioParaCadastrar == null) {
+            throw new UsuarioException("Todos os campos devem ser prenchidos");
+        }
         usuarioRepository.save(usuarioParaCadastrar);
 
         UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();

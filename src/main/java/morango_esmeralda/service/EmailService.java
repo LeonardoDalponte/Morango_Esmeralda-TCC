@@ -1,8 +1,7 @@
 package morango_esmeralda.service;
 
 import morango_esmeralda.domain.Email;
-import morango_esmeralda.domain.Usuario;
-import morango_esmeralda.domain.email.StatusEmail;
+import morango_esmeralda.enums.StatusEmail;
 import morango_esmeralda.dtos.requests.SendPasswordEmailRequestDTO;
 import morango_esmeralda.repository.EmailRepository;
 import morango_esmeralda.repository.UsuarioRepository;

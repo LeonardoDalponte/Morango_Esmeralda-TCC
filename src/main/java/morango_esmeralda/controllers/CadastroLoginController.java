@@ -28,10 +28,6 @@ public class CadastroLoginController {
 
     private final CadastroLoginService cadastroLoginService;
 
-    @GetMapping()
-    public List<Usuario> buscarTodos() {
-        return cadastroLoginService.buscarTodos();
-    }
 
 
     @PostMapping(path = "/cadastrar")
@@ -44,20 +40,10 @@ public class CadastroLoginController {
         return cadastroLoginService.login(loginRequestDTO);
     }
 
-    @GetMapping(path = "/buscarPorToken")
-    public Usuario me(Principal principal) {
-        return usuarioRepository.findByEmail(principal.getName())
-                .orElseThrow();
-    }
 
 
-    @DeleteMapping(path = "/{id}")
-    public void deletar(@PathVariable("id") Integer idUsuario) {
-        cadastroLoginService.deletar(idUsuario);
-    }
 
-    @PutMapping(path = "/alterar")
-    public UsuarioResponseDTO alterar(@RequestBody UsuarioRequestDTO usuarioRequestDTO, Principal principal) {
-        return cadastroLoginService.alterar(usuarioRequestDTO, principal);
-    }
+
+
+
 }

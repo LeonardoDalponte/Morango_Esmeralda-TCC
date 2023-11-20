@@ -2,7 +2,7 @@ package morango_esmeralda.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import morango_esmeralda.domain.email.StatusEmail;
+import morango_esmeralda.enums.StatusEmail;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

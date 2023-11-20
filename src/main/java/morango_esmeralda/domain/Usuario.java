@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import morango_esmeralda.domain.user.UserRole;
+import morango_esmeralda.enums.TipoUsuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,9 +43,9 @@ public class Usuario implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column()
-    private UserRole tipo;
+    private TipoUsuario tipo;
 
-    public Usuario(String nome, String senha, String email, Date data_nasc, String telefone, UserRole tipo) {
+    public Usuario(String nome, String senha, String email, Date data_nasc, String telefone, TipoUsuario tipo) {
         this.nome = nome;
         this.senha = senha;
         this.email = email;

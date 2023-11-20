@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import morango_esmeralda.domain.user.UserRole;
+import morango_esmeralda.enums.TipoUsuario;
 
-import javax.management.relation.Role;
 import java.util.Date;
 
 @Builder
@@ -23,7 +22,7 @@ public class UsuarioResponseDTO {
 
     private String email;
 
-    private UserRole role;
+    private TipoUsuario role;
 
     private Date data_nasc;
     private String telefone;

@@ -1,12 +1,12 @@
-package morango_esmeralda.domain.user;
+package morango_esmeralda.enums;
 
-public enum UserRole {
+public enum TipoUsuario {
     ADMINISTRADOR("admin"),
     CLIENTE("cliente");
 
     private String tipo;
 
-    UserRole(String tipo) {
+    TipoUsuario(String tipo) {
         this.tipo = tipo;
     }
 

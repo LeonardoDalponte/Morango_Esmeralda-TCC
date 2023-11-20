@@ -40,6 +40,19 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(errorResponse, badRequest);
     }
 
+    @ExceptionHandler(value = ProdutoException.class)
+    public ResponseEntity<ErrorResponse> handlerProdutoException(ProdutoException e) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                e.getMessage(),
+                badRequest.value(),
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(errorResponse, badRequest);
+    }
+
 
 
     public static class ErrorResponse {

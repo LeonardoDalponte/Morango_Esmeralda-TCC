@@ -1,4 +1,4 @@
-package morango_esmeralda.domain.email;
+package morango_esmeralda.enums;
 
 public enum StatusEmail {
 
