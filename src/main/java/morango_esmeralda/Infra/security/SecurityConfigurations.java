@@ -33,6 +33,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/produtos/buscar-todos").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "api/produtos/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/produtos/alterar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/usuarios").permitAll()

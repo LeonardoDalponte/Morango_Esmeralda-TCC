@@ -29,6 +29,10 @@ public class ProdutoController {
     public ProdutoResponseDTO salvar(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
         return produtoService.salvar(produtoRequestDTO);
     }
+    @PutMapping("/alterar")
+    public ProdutoResponseDTO alterarProduto(@RequestBody ProdutoRequestDTO produtoRequestDTO){
+        return produtoService.alterarProduto(produtoRequestDTO);
+    }
 
     @GetMapping(path = "/buscar-todos")
     public List<ProdutoResponseDTO> buscarTodos() {

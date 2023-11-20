@@ -3,6 +3,7 @@ package morango_esmeralda.service;
 import morango_esmeralda.domain.Produto;
 import morango_esmeralda.dtos.requests.ProdutoRequestDTO;
 import morango_esmeralda.dtos.responses.ProdutoResponseDTO;
+import morango_esmeralda.excepition.ProdutoException;
 import morango_esmeralda.excepition.UsuarioException;
 import morango_esmeralda.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,16 @@ public class ProdutoService {
     public ProdutoResponseDTO salvar(ProdutoRequestDTO produtoRequestDTO) {
         Produto produtoParaSerSalvo = new Produto();
 
-        if (produtoParaSerSalvo.getNome() == null || produtoParaSerSalvo.getDescricao() == null ||
-                produtoParaSerSalvo.getQuant() == null || produtoParaSerSalvo.getPreco() == null) {
-            throw new UsuarioException("Todos os campos devem ser prenchidos");
-        }
 
         produtoParaSerSalvo.setNome(produtoRequestDTO.getNome());
         produtoParaSerSalvo.setDescricao(produtoRequestDTO.getDescricao());
         produtoParaSerSalvo.setQuant(produtoRequestDTO.getQuant());
         produtoParaSerSalvo.setPreco(produtoRequestDTO.getPreco());
 
+        if (produtoParaSerSalvo.getNome() == null || produtoParaSerSalvo.getDescricao() == null ||
+                produtoParaSerSalvo.getQuant() == null || produtoParaSerSalvo.getPreco() == null) {
+            throw new ProdutoException("Todos os campos devem ser prenchidos");
+        }
 
         Produto produtoSalvo = produtoRepository.save(produtoParaSerSalvo);
 
@@ -46,8 +47,10 @@ public class ProdutoService {
     }
 
     public ProdutoResponseDTO buscarPeloId(Integer id) {
-        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ProdutoException("Produto não encontrado"));
         ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
+
         produtoResponseDTO.setIdProduto(id);
         produtoResponseDTO.setNome(produto.getNome());
         produtoResponseDTO.setDescricao(produto.getDescricao());
@@ -73,6 +76,30 @@ public class ProdutoService {
 
     public void deletar(Integer idProduto) {
         produtoRepository.deleteById(idProduto);
+    }
+
+    public ProdutoResponseDTO alterarProduto(ProdutoRequestDTO produtoRequestDTO) {
+
+        Produto produto = new Produto();
+        produto.setNome(produtoRequestDTO.getNome());
+        produto.setDescricao(produtoRequestDTO.getDescricao());
+        produto.setQuant(produtoRequestDTO.getQuant());
+        produto.setPreco(produtoRequestDTO.getPreco());
+
+        if (produto.getNome() == null || produto.getDescricao() == null ||
+                produto.getQuant() == null || produto.getPreco() == null) {
+            throw new ProdutoException("Todos os campos devem ser prenchidos");
+        }
+        produtoRepository.save(produto);
+
+        ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
+
+        produtoResponseDTO.setNome(produto.getNome());
+        produtoResponseDTO.setDescricao(produto.getDescricao());
+        produtoResponseDTO.setQuant(produto.getQuant());
+        produtoResponseDTO.setPreco(produto.getPreco());
+
+        return produtoResponseDTO;
     }
 }
 
