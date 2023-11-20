@@ -1,15 +1,19 @@
 package morango_esmeralda.service;
 
 import morango_esmeralda.domain.Produto;
+import morango_esmeralda.domain.Usuario;
 import morango_esmeralda.dtos.requests.ProdutoRequestDTO;
 import morango_esmeralda.dtos.responses.ProdutoResponseDTO;
+import morango_esmeralda.dtos.responses.UsuarioResponseDTO;
 import morango_esmeralda.excepition.ProdutoException;
 import morango_esmeralda.excepition.UsuarioException;
 import morango_esmeralda.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -78,26 +82,25 @@ public class ProdutoService {
         produtoRepository.deleteById(idProduto);
     }
 
-    public ProdutoResponseDTO alterarProduto(ProdutoRequestDTO produtoRequestDTO) {
+    public ProdutoResponseDTO alterarProduto(ProdutoRequestDTO produtoRequestDTO, Integer idProduto) {
 
-        Produto produto = new Produto();
-        produto.setNome(produtoRequestDTO.getNome());
-        produto.setDescricao(produtoRequestDTO.getDescricao());
-        produto.setQuant(produtoRequestDTO.getQuant());
-        produto.setPreco(produtoRequestDTO.getPreco());
+        Produto produtoParaAlterar = produtoRepository.findById(idProduto)
+                .orElseThrow(() -> new ProdutoException("Produto não encontrado"));
 
-        if (produto.getNome() == null || produto.getDescricao() == null ||
-                produto.getQuant() == null || produto.getPreco() == null) {
-            throw new ProdutoException("Todos os campos devem ser prenchidos");
-        }
-        produtoRepository.save(produto);
+        produtoParaAlterar.setNome(produtoRequestDTO.getNome());
+        produtoParaAlterar.setPreco(produtoRequestDTO.getPreco());
+        produtoParaAlterar.setDescricao(produtoRequestDTO.getDescricao());
+        produtoParaAlterar.setQuant(produtoRequestDTO.getQuant());
+
+        Produto produtoAlterado = produtoRepository.save(produtoParaAlterar);
 
         ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
 
-        produtoResponseDTO.setNome(produto.getNome());
-        produtoResponseDTO.setDescricao(produto.getDescricao());
-        produtoResponseDTO.setQuant(produto.getQuant());
-        produtoResponseDTO.setPreco(produto.getPreco());
+        produtoResponseDTO.setIdProduto(produtoAlterado.getIdProduto());
+        produtoResponseDTO.setNome(produtoAlterado.getNome());
+        produtoResponseDTO.setDescricao(produtoAlterado.getDescricao());
+        produtoResponseDTO.setPreco(produtoAlterado.getPreco());
+        produtoResponseDTO.setQuant(produtoAlterado.getQuant());
 
         return produtoResponseDTO;
     }

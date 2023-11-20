@@ -50,6 +50,7 @@ public class UsuarioService {
                 .orElseThrow(() -> new UsuarioException("Usuario não encontrado"));
 
         usuarioParaAlterar.setNome(usuarioRequestDTO.getNome());
+        usuarioParaAlterar.setEmail(usuarioRequestDTO.getEmail());
         usuarioParaAlterar.setTelefone(usuarioRequestDTO.getTelefone());
         usuarioParaAlterar.setDataNasc(usuarioRequestDTO.getDataNasc());
         usuarioParaAlterar.setSenha(new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha()));

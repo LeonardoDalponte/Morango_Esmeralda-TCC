@@ -14,6 +14,9 @@ import java.util.List;
 @Table(name = "produto")
 public class Produto {
 
+    public Integer getIdProduto() {
+        return idProduto;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

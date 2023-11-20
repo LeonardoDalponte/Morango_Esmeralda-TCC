@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -29,9 +30,10 @@ public class ProdutoController {
     public ProdutoResponseDTO salvar(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
         return produtoService.salvar(produtoRequestDTO);
     }
-    @PutMapping("/alterar")
-    public ProdutoResponseDTO alterarProduto(@RequestBody ProdutoRequestDTO produtoRequestDTO){
-        return produtoService.alterarProduto(produtoRequestDTO);
+
+    @PutMapping("/alterar/{id}")
+    public ProdutoResponseDTO alterarProduto(@RequestBody ProdutoRequestDTO produtoRequestDTO,@PathVariable("id")Integer idProduto) {
+        return produtoService.alterarProduto(produtoRequestDTO,idProduto);
     }
 
     @GetMapping(path = "/buscar-todos")
