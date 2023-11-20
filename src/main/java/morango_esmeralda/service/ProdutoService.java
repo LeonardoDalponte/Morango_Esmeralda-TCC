@@ -3,6 +3,7 @@ package morango_esmeralda.service;
 import morango_esmeralda.domain.Produto;
 import morango_esmeralda.dtos.requests.ProdutoRequestDTO;
 import morango_esmeralda.dtos.responses.ProdutoResponseDTO;
+import morango_esmeralda.excepition.UsuarioException;
 import morango_esmeralda.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,11 @@ public class ProdutoService {
 
     public ProdutoResponseDTO salvar(ProdutoRequestDTO produtoRequestDTO) {
         Produto produtoParaSerSalvo = new Produto();
+
+        if (produtoParaSerSalvo.getNome() == null || produtoParaSerSalvo.getDescricao() == null ||
+                produtoParaSerSalvo.getQuant() == null || produtoParaSerSalvo.getPreco() == null) {
+            throw new UsuarioException("Todos os campos devem ser prenchidos");
+        }
 
         produtoParaSerSalvo.setNome(produtoRequestDTO.getNome());
         produtoParaSerSalvo.setDescricao(produtoRequestDTO.getDescricao());

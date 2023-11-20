@@ -23,15 +23,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CadastroLoginService {
-
     private final UsuarioRepository usuarioRepository;
     @Autowired
     TokenService tokenService;
-
     @Autowired
     AuthenticationManager authenticationManager;
 
     public UsuarioResponseDTO cadastrar(UsuarioRequestDTO usuarioRequestDTO) {
+        if (usuarioRequestDTO.getNome() == null || usuarioRequestDTO.getSenha() == null ||
+                usuarioRequestDTO.getEmail() == null || usuarioRequestDTO.getTelefone() == null ||
+                usuarioRequestDTO.getDataNasc() == null) {
+
+        }
         Usuario usuarioParaCadastrar = usuarioRepository.findByEmail(usuarioRequestDTO.getEmail())
                 .orElse(null);
         if (usuarioParaCadastrar != null) {
@@ -42,16 +45,14 @@ public class CadastroLoginService {
         usuarioParaCadastrar = new Usuario(usuarioRequestDTO.getNome(), senhaCriptografada, usuarioRequestDTO.getEmail(),
                 usuarioRequestDTO.getDataNasc(), usuarioRequestDTO.getTelefone(), TipoUsuario.CLIENTE);
 
-        if (usuarioParaCadastrar == null) {
-            throw new UsuarioException("Todos os campos devem ser prenchidos");
-        }
+
         usuarioRepository.save(usuarioParaCadastrar);
 
         UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
 
         usuarioResponseDTO.setIdUsuario(usuarioParaCadastrar.getIdUsuario());
         usuarioResponseDTO.setNome(usuarioParaCadastrar.getNome());
-        usuarioResponseDTO.setRole(usuarioParaCadastrar.getTipo());
+        usuarioResponseDTO.setTipo(usuarioParaCadastrar.getTipo());
         usuarioResponseDTO.setEmail(usuarioParaCadastrar.getEmail());
         usuarioResponseDTO.setTelefone(usuarioParaCadastrar.getTelefone());
         usuarioResponseDTO.setData_nasc(usuarioParaCadastrar.getDataNasc());
@@ -67,36 +68,5 @@ public class CadastroLoginService {
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
 
-    }
-
-    public List<Usuario> buscarTodos() {
-        return usuarioRepository.findAll();
-    }
-
-    public void deletar(Integer idUsuario) {
-        usuarioRepository.deleteById(idUsuario);
-    }
-
-    public UsuarioResponseDTO alterar(UsuarioRequestDTO usuarioRequestDTO, Principal principal) {
-        Usuario usuarioParaAlterar = usuarioRepository.findByEmail(principal.getName())
-                .orElseThrow(() -> new UsuarioException("Usuario não encontrado"));
-
-        usuarioParaAlterar.setNome(usuarioRequestDTO.getNome());
-        usuarioParaAlterar.setTelefone(usuarioRequestDTO.getTelefone());
-        usuarioParaAlterar.setDataNasc(usuarioRequestDTO.getDataNasc());
-        usuarioParaAlterar.setSenha(new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha()));
-
-        Usuario usuarioAlterado = usuarioRepository.save(usuarioParaAlterar);
-
-        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
-
-        usuarioResponseDTO.setIdUsuario(usuarioAlterado.getIdUsuario());
-        usuarioResponseDTO.setNome(usuarioAlterado.getNome());
-        usuarioResponseDTO.setSenha(usuarioAlterado.getSenha());
-        usuarioResponseDTO.setTelefone(usuarioAlterado.getTelefone());
-        usuarioResponseDTO.setData_nasc(usuarioAlterado.getDataNasc());
-        usuarioResponseDTO.setEmail(usuarioAlterado.getEmail());
-
-        return usuarioResponseDTO;
     }
 }

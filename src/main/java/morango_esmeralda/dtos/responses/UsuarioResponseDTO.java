@@ -13,17 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class UsuarioResponseDTO {
-
     private Integer idUsuario;
-
     private String nome;
-
     private String senha;
-
     private String email;
-
-    private TipoUsuario role;
-
+    private TipoUsuario tipo;
     private Date data_nasc;
     private String telefone;
 

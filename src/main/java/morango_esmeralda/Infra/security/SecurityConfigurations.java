@@ -35,8 +35,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE, "api/produtos/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/usuarios").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/carrinhos/adcionarProduto").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/usuarios/buscar-por-token").permitAll()
                         .anyRequest().authenticated()
 
                 )
