@@ -92,6 +92,11 @@ public class ProdutoService {
         produtoParaAlterar.setDescricao(produtoRequestDTO.getDescricao());
         produtoParaAlterar.setQuant(produtoRequestDTO.getQuant());
 
+        if (produtoParaAlterar.getNome() == null || produtoParaAlterar.getDescricao() == null ||
+                produtoParaAlterar.getQuant() == null || produtoParaAlterar.getPreco() == null) {
+            throw new ProdutoException("Todos os campos devem ser prenchidos");
+        }
+
         Produto produtoAlterado = produtoRepository.save(produtoParaAlterar);
 
         ProdutoResponseDTO produtoResponseDTO = new ProdutoResponseDTO();
