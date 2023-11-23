@@ -68,4 +68,22 @@ public class UsuarioService {
 
         return usuarioResponseDTO;
     }
+
+    public UsuarioResponseDTO redefinirSenha(UsuarioRequestDTO usuarioRequestDTO, Principal principal) {
+        Usuario usuarioParaAlterarSenha = usuarioRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new UsuarioException("Usuario não encontrado"));
+
+        usuarioParaAlterarSenha.setSenha(new BCryptPasswordEncoder().encode(usuarioRequestDTO.getSenha()));
+
+        Usuario usuarioComSenhaAlterada = usuarioRepository.save(usuarioParaAlterarSenha);
+
+
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
+
+        usuarioResponseDTO.setIdUsuario(usuarioComSenhaAlterada.getIdUsuario());
+        usuarioResponseDTO.setNome(usuarioComSenhaAlterada.getNome());
+        usuarioResponseDTO.setSenha(usuarioComSenhaAlterada.getSenha());
+
+        return usuarioResponseDTO;
+    }
 }

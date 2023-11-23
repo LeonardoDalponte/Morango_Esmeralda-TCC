@@ -46,5 +46,8 @@ public class UsuarioController {
         usuarioService.deletar(idUsuario);
     }
 
-
+    @PutMapping("/redefinir-senha")
+    public UsuarioResponseDTO redefinirSenha(@RequestBody UsuarioRequestDTO usuarioRequestDTO,Principal principal){
+       return usuarioService.redefinirSenha(usuarioRequestDTO,principal);
+    }
 }

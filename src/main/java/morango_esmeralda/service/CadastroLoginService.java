@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
 import java.security.Principal;
 import java.util.List;
 
@@ -30,11 +31,16 @@ public class CadastroLoginService {
     AuthenticationManager authenticationManager;
 
     public UsuarioResponseDTO cadastrar(UsuarioRequestDTO usuarioRequestDTO) {
-        if (usuarioRequestDTO.getNome() == null || usuarioRequestDTO.getSenha() == null ||
-                usuarioRequestDTO.getEmail() == null || usuarioRequestDTO.getTelefone() == null ||
-                usuarioRequestDTO.getDataNasc() == null) {
-
+        if (usuarioRequestDTO.getNome().equals("") || usuarioRequestDTO.getSenha().equals("") ||
+                usuarioRequestDTO.getEmail().equals("") || usuarioRequestDTO.getTelefone().equals("") ||
+                usuarioRequestDTO.getDataNasc().equals("")) {
+            throw new UsuarioException("Prencha todos os campos");
         }
+
+        if (usuarioRequestDTO.getTelefone().length() > 11) {
+            throw new UsuarioException("O Numero é muito grande");
+        }
+
         Usuario usuarioParaCadastrar = usuarioRepository.findByEmail(usuarioRequestDTO.getEmail())
                 .orElse(null);
         if (usuarioParaCadastrar != null) {
@@ -61,12 +67,17 @@ public class CadastroLoginService {
     }
 
     public ResponseEntity<Object> login(LoginRequestDTO loginRequestDTO) {
-        var emailSenha = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getSenha());
-        var auth = this.authenticationManager.authenticate(emailSenha);
+        try {
+            var emailSenha = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getSenha());
 
-        var token = tokenService.geradorDeToken((Usuario) auth.getPrincipal());
+            var auth = this.authenticationManager.authenticate(emailSenha);
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+            var token = tokenService.geradorDeToken((Usuario) auth.getPrincipal());
 
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+        } catch (UsuarioException e) {
+            throw new UsuarioException("Mensagem de erro personalizada", e);
+        }
     }
 }
+

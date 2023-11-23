@@ -1,8 +1,10 @@
 package morango_esmeralda.service;
 
 import morango_esmeralda.domain.Email;
+import morango_esmeralda.domain.Usuario;
 import morango_esmeralda.enums.StatusEmail;
 import morango_esmeralda.dtos.requests.SendPasswordEmailRequestDTO;
+import morango_esmeralda.excepition.UsuarioException;
 import morango_esmeralda.repository.EmailRepository;
 import morango_esmeralda.repository.UsuarioRepository;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -47,9 +49,6 @@ public class EmailService {
     }
 
     public void sendForgotPasswordEmail(SendPasswordEmailRequestDTO sendPasswordEmailRequestDTO) {
-        String codigo = StringUtils.upperCase(RandomStringUtils.randomAlphabetic(6));
-
-
     }
 }
 
