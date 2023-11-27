@@ -17,8 +17,14 @@ public class Carrinho {
     @Column(name = "id_carrinho")
     private Integer idCarrinho;
 
-    @Column(name = "endereco_entrega", length = 245, nullable = true)
-    private String endereco;
+    @Column(name = "rua", length = 245, nullable = true)
+    private String rua;
+
+    @Column(name = "bairro", length = 245, nullable = true)
+    private String bairro;
+
+    @Column(name = "cidade", length = 245, nullable = true)
+    private String cidade;
 
     @Column(name = "CEP", length = 245, nullable = true)
     private String CEP;

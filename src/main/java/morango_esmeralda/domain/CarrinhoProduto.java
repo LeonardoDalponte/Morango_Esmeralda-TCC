@@ -16,6 +16,9 @@ public class CarrinhoProduto {
     @Column(name = "id_carrinho_produto")
     private Integer idCarrinhoProduto;
 
+    @Column(name = "quantidade",nullable = false)
+    private Integer quantidade;
+
     @ManyToOne
     @JoinColumn(name = "id_carrinho")
     private Carrinho carrinho;

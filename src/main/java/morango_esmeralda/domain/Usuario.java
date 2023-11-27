@@ -31,6 +31,7 @@ public class Usuario implements UserDetails {
     @Column(name = "senha", length = 245, nullable = false)
     private String senha;
 
+
     @Column(name = "email", length = 40, nullable = false)
     private String email;
 

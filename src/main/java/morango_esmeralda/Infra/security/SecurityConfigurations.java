@@ -38,7 +38,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "api/cadastrar").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/usuarios").permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/carrinhos/adcionarProduto").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "api/carrinhos/mostrar-carrinho").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/carrinhos/adicionar-produto").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/carrinhos/aumentar-quantidade").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/carrinhos/diminuir-quantidade").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "api/carrinhos/apagar/{id}").permitAll()
                         .anyRequest().authenticated()
 
                 )

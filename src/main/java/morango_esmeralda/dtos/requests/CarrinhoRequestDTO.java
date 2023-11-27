@@ -13,7 +13,7 @@ public class CarrinhoRequestDTO {
 
     private Integer idProduto;
 
-    private Integer idCarrinho;
+    private Integer quantidade;
 
-    private Integer idUsuario;
+
 }

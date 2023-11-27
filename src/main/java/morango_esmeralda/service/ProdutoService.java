@@ -32,8 +32,8 @@ public class ProdutoService {
         produtoParaSerSalvo.setQuant(produtoRequestDTO.getQuant());
         produtoParaSerSalvo.setPreco(produtoRequestDTO.getPreco());
 
-        if (produtoParaSerSalvo.getNome() == null || produtoParaSerSalvo.getDescricao() == null ||
-                produtoParaSerSalvo.getQuant() == null || produtoParaSerSalvo.getPreco() == null) {
+        if (produtoParaSerSalvo.getNome().equals("") || produtoParaSerSalvo.getDescricao().equals("") ||
+                produtoParaSerSalvo.getQuant().equals("") || produtoParaSerSalvo.getPreco().equals("")) {
             throw new ProdutoException("Todos os campos devem ser prenchidos");
         }
 
